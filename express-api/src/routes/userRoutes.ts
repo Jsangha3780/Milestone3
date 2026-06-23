@@ -3,6 +3,8 @@ import pool from "../db";
 
 const router = Router();
 
+//testing commit
+
 // GET all users
 router.get("/", async (_req: Request, res: Response) => {
   const [rows] = await pool.query("SELECT * FROM users");
