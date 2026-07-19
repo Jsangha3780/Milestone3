@@ -37,9 +37,9 @@ router.get("/:id", async (req: Request, res: Response) => {
  */
 router.post("/", async (req: Request, res: Response) => {
 
-  console.log(req.body);   // ADD THIS LINE HERE
+  console.log(req.body);   
 
-  const { name } = req.body || {};   // CHANGE THIS LINE
+  const { name } = req.body || {};   
 
   // Check if the name was entered
   if (!name) {
