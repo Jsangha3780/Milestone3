@@ -36,7 +36,10 @@ router.get("/:id", async (req: Request, res: Response) => {
    Inserts a new college into the database.
  */
 router.post("/", async (req: Request, res: Response) => {
-  const { name } = req.body;
+
+  console.log(req.body);   // ADD THIS LINE HERE
+
+  const { name } = req.body || {};   // CHANGE THIS LINE
 
   // Check if the name was entered
   if (!name) {
@@ -62,7 +65,7 @@ router.post("/", async (req: Request, res: Response) => {
    Changes the college name using its ID.
 */
 router.put("/:id", async (req: Request, res: Response) => {
-  const { name } = req.body;
+ const { name } = req.body || {};
 
   // Update the college
   const [result]: any = await pool.query(
