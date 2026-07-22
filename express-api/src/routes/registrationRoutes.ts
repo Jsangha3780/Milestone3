@@ -41,6 +41,26 @@ router.post("/", async (req: Request, res: Response) => {
   });
 });
 
+// PUT update registration
+router.put("/:id", async (req: Request, res: Response) => {
+  const { user_id, event_id } = req.body;
+
+  const [result]: any = await pool.query(
+    "UPDATE event_registrations SET user_id = ?, event_id = ? WHERE id = ?",
+    [user_id, event_id, req.params.id]
+  );
+
+  if (result.affectedRows === 0) {
+    return res.status(404).json({ message: `Registration ${req.params.id} not found` });
+  }
+
+  res.json({
+    message: `Registration ${req.params.id} updated`,
+    user_id,
+    event_id
+  });
+});
+
 // DELETE registration
 router.delete("/:id", async (req: Request, res: Response) => {
   const [result]: any = await pool.query("DELETE FROM event_registrations WHERE id = ?", [req.params.id]);
