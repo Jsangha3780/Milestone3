@@ -11,7 +11,7 @@ router.get("/", async (_req: Request, res: Response) => {
 
 // GET one registration
 router.get("/:id", async (req: Request, res: Response) => {
-  const [rows]: any = await pool.query("SELECT * FROM event_registrations WHERE id = ?", [req.params.id]);
+  const [rows]: any = await pool.query("SELECT * FROM event_registrations WHERE registration_id = ? = ?", [req.params.id]);
   if (!rows || rows.length === 0) {
     return res.status(404).json({ message: `Registration ${req.params.id} not found` });
   }
@@ -46,7 +46,7 @@ router.put("/:id", async (req: Request, res: Response) => {
   const { user_id, event_id } = req.body;
 
   const [result]: any = await pool.query(
-    "UPDATE event_registrations SET user_id = ?, event_id = ? WHERE id = ?",
+    "UPDATE event_registrations SET user_id = ?, event_id = ? WHERE registration_id = ?",
     [user_id, event_id, req.params.id]
   );
 
@@ -63,7 +63,7 @@ router.put("/:id", async (req: Request, res: Response) => {
 
 // DELETE registration
 router.delete("/:id", async (req: Request, res: Response) => {
-  const [result]: any = await pool.query("DELETE FROM event_registrations WHERE id = ?", [req.params.id]);
+  const [result]: any = await pool.query("DELETE FROM event_registrations WHERE registration_id = ?", [req.params.id]);
   if (result.affectedRows === 0) {
     return res.status(404).json({ message: `Registration ${req.params.id} not found` });
   }
@@ -71,3 +71,4 @@ router.delete("/:id", async (req: Request, res: Response) => {
 });
 
 export default router;
+
