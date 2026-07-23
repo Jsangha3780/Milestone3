@@ -80,18 +80,4 @@ router.delete("/:id", async (req: Request, res: Response) => {
   res.json({ message: `Event ${req.params.id} deleted` });
 });
 
-// UPDATE interest (remove unless needed for Milestone 5)
-router.put("/:id/interested", async (req: Request, res: Response) => {
-  const [rows]: any = await pool.query(
-    "SELECT * FROM events WHERE event_id = ?",
-    [req.params.id]
-  );
-
-  if (!rows || rows.length === 0) {
-    return res.status(404).json({ message: `Event ${req.params.id} not found` });
-  }
-
-  res.json({ message: `Interest updated for event ${req.params.id}` });
-});
-
 export default router;
