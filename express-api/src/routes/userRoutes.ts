@@ -42,29 +42,6 @@ router.post("/", async (req: Request, res: Response) => {
   });
 });
 
-// UPDATE user
-router.put("/:id", async (req: Request, res: Response) => {
-  const { name, email, last_name, college_id } = req.body;
-  const userId = req.params.id;
-
-  const [existingRows]: any = await pool.query("SELECT * FROM users WHERE user_id = ?", [userId]);
-  if (!existingRows || existingRows.length === 0) {
-    return res.status(404).json({ message: `User ${userId} not found` });
-  }
-
-  const existing = existingRows[0];
-  const updatedEmail = email ?? existing.email;
-  const updatedCollegeId = college_id ?? existing.college_id ?? null;
-  const updatedLastName = last_name ?? name ?? existing.last_name ?? null;
-
-  await pool.query(
-    "UPDATE users SET email = ?, college_id = ?, last_name = ? WHERE user_id = ?",
-    [updatedEmail, updatedCollegeId, updatedLastName, userId]
-  );
-
-  res.json({ message: `User ${userId} updated` });
-});
-
 // PATCH user
 router.patch("/:id", async (req: Request, res: Response) => {
   const { name, email, last_name, college_id } = req.body;
